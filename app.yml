@@ -1,0 +1,48 @@
+app:
+  image: nodejs-strapi
+  expose: 1337
+  cache:
+    - /srv/app/node_modules
+    - /srv/app/.cache
+    - /srv/app/build
+  volumes:
+    app: /srv/app
+  env:
+    DATABASE_TYPE:
+      description: A secret key for verifying the integrity of signed cookies.
+      generator: secret
+      default: postgres
+  environments:
+    PostgreSQL:
+      DATABASE_TYPE: postgres
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: strapi
+    MySQL:
+      DATABASE_TYPE: mysql
+      DATABASE_HOST: db
+      DATABASE_PORT: 3306
+      DATABASE_NAME: strapi
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: strapi
+  options:
+    - MySQL:
+        description: STRAPI MySQL module
+        addons:
+          - type: db-mysql
+            as: db
+            options:
+              database: strapi
+              persistent: true
+              sql: https://omneedia.s3.us-west-000.backblazeb2.com/nodejs-strapi/strapi-mysql.sql
+    - PostgreSQL:
+        description: STRAPI PostgreSQL module
+        addons:
+          - type: db-postgres
+            as: db
+            options:
+              database: strapi
+              persistent: true
+              sql: https://f000.backblazeb2.com/file/omneedia/nodejs-strapi/strapi-pg.sql
