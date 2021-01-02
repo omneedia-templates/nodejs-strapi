@@ -1,6 +1,8 @@
-FROM ubuntu:18.04
+FROM omneedia/ubuntu
 
-RUN apt-get update && apt install -y curl
+RUN apt-get update && \
+    apt-get install -y curl software-properties-common && \
+    rm -rf /var/lib/apt/lists/*
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install -g yarn

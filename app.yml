@@ -10,7 +10,6 @@ app:
   env:
     DATABASE_TYPE:
       description: A secret key for verifying the integrity of signed cookies.
-      generator: secret
       default: postgres
   environments:
     PostgreSQL:
